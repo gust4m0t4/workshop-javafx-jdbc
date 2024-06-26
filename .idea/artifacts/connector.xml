@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="connector">
+    <output-path>$PROJECT_DIR$/out/artifacts/connector</output-path>
+    <root id="archive" name="connector.jar">
+      <element id="library" level="project" name="mysql-connector-j-8.0.33" />
+    </root>
+  </artifact>
+</component>
