@@ -34,7 +34,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnMenuItemDepartmentAction() {
-        System.out.println("OnMenuItemDepartmentAction");
+        loadView("/com/metatron/workshopjavafxjdbc/DepartmentList.fxml");
     }
 
     @FXML
