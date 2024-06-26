@@ -2,6 +2,7 @@ package com.metatron.workshopjavafxjdbc.gui;
 
 import com.metatron.workshopjavafxjdbc.MainApplication;
 import com.metatron.workshopjavafxjdbc.gui.util.Alerts;
+import com.metatron.workshopjavafxjdbc.model.services.DepartmentService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,7 +35,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnMenuItemDepartmentAction() {
-        loadView("/com/metatron/workshopjavafxjdbc/DepartmentList.fxml");
+        loadView2("/com/metatron/workshopjavafxjdbc/DepartmentList.fxml");
     }
 
     @FXML
@@ -62,4 +63,27 @@ public class MainController implements Initializable {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+    private synchronized void loadView2(String absoluteName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            VBox newVBox = loader.load();
+
+            Scene mainScene = MainApplication.getMainScene();
+            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
+            Node mainMenu = mainVBox.getChildren().get(0);
+            mainVBox.getChildren().clear();
+            mainVBox.getChildren().add(mainMenu);
+            mainVBox.getChildren().addAll(newVBox.getChildren());
+
+            DepartmentListController controller = loader.getController();
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
+        }
+        catch (IOException e) {
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 }
+

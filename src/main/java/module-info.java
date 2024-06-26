@@ -9,4 +9,5 @@ module com.metatron.workshopjavafxjdbc {
     exports com.metatron.workshopjavafxjdbc;
     exports com.metatron.workshopjavafxjdbc.gui;
     opens com.metatron.workshopjavafxjdbc.gui to javafx.fxml;
+    opens com.metatron.workshopjavafxjdbc.model.entities to javafx.base;
 }
