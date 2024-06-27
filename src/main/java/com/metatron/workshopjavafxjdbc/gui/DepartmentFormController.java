@@ -1,6 +1,7 @@
 package com.metatron.workshopjavafxjdbc.gui;
 
 import com.metatron.workshopjavafxjdbc.db.DbException;
+import com.metatron.workshopjavafxjdbc.gui.listeners.DataChangeListener;
 import com.metatron.workshopjavafxjdbc.gui.util.Alerts;
 import com.metatron.workshopjavafxjdbc.gui.util.Constraints;
 import com.metatron.workshopjavafxjdbc.gui.util.Utils;
@@ -15,9 +16,13 @@ import javafx.scene.control.TextField;
 
 import javafx.event.ActionEvent;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DepartmentFormController implements Initializable {
+
+    private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
     private Department entity;
 
@@ -44,6 +49,10 @@ public class DepartmentFormController implements Initializable {
     public void setDepartmentService(DepartmentService service) {
         this.service = service;
     }
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        dataChangeListeners.add(listener);
+
+    }
 
 
     @FXML
@@ -57,9 +66,16 @@ public class DepartmentFormController implements Initializable {
         try {
             entity = getFormData();
             service.saveOrUpdate(entity);
+            notifyDataChangeListeners();
             Utils.currentStage(event).close();
         }catch (DbException e) {
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void notifyDataChangeListeners() {
+        for(DataChangeListener listener : dataChangeListeners) {
+            listener.onDataChanged();
         }
     }
 

@@ -1,6 +1,7 @@
 package com.metatron.workshopjavafxjdbc.gui;
 
 import com.metatron.workshopjavafxjdbc.MainApplication;
+import com.metatron.workshopjavafxjdbc.gui.listeners.DataChangeListener;
 import com.metatron.workshopjavafxjdbc.gui.util.Alerts;
 import com.metatron.workshopjavafxjdbc.gui.util.Utils;
 import com.metatron.workshopjavafxjdbc.model.entities.Department;
@@ -27,7 +28,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
 
     private DepartmentService service;
 
@@ -83,6 +84,7 @@ public class DepartmentListController implements Initializable {
             DepartmentFormController controller = loader.getController();
             controller.setDepartment(obj);
             controller.setDepartmentService(new DepartmentService());
+            controller.subscribeDataChangeListener(this);
             controller.updateFromData();
 
             Stage dialogStage = new Stage();
@@ -98,4 +100,9 @@ public class DepartmentListController implements Initializable {
         }
     }
 
+    @Override
+    public void onDataChanged() {
+        updateTableView();
+
+    }
 }
