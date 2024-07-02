@@ -3,6 +3,7 @@ package com.metatron.workshopjavafxjdbc.gui;
 import com.metatron.workshopjavafxjdbc.MainApplication;
 import com.metatron.workshopjavafxjdbc.gui.util.Alerts;
 import com.metatron.workshopjavafxjdbc.model.services.DepartmentService;
+import com.metatron.workshopjavafxjdbc.model.services.SellerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +32,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnMenuItemSellerAction() {
-        System.out.println("OnMenuItemSellerAction");
+        loadView("/com/metatron/workshopjavafxjdbc/SellerList.fxml", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+        });
     }
 
     @FXML

@@ -4,18 +4,19 @@ import com.metatron.workshopjavafxjdbc.model.dao.DaoFactory;
 import com.metatron.workshopjavafxjdbc.model.dao.DepartmentDao;
 import com.metatron.workshopjavafxjdbc.model.dao.SellerDao;
 import com.metatron.workshopjavafxjdbc.model.entities.Department;
+import com.metatron.workshopjavafxjdbc.model.entities.Seller;
 
 import java.util.List;
 
-public class DepartmentService {
+public class SellerService {
 
-    private DepartmentDao dao = DaoFactory.createDepartmentDao();
+    private SellerDao dao = DaoFactory.createSellerDao();
 
-    public List<Department> findAll() {
+    public List<Seller> findAll() {
         return  dao.findAll();
 
     }
-    public void saveOrUpdate(Department obj) {
+    public void saveOrUpdate(Seller obj) {
         if(obj.getId() == null) {
             dao.insert(obj);
         }
@@ -23,7 +24,7 @@ public class DepartmentService {
             dao.update(obj);
         }
     }
-    public void remove(Department obj) {
+    public void remove(Seller obj) {
         dao.deleteById(obj.getId());
     }
 
