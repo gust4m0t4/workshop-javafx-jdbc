@@ -5,6 +5,7 @@ module com.metatron.workshopjavafxjdbc {
     requires com.dlsc.formsfx;
     requires java.desktop;
     requires java.sql;
+    requires jdk.jshell;
 
     opens com.metatron.workshopjavafxjdbc to javafx.fxml;
     exports com.metatron.workshopjavafxjdbc;
