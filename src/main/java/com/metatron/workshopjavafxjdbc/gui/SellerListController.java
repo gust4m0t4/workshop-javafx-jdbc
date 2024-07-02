@@ -15,6 +15,7 @@ import com.metatron.workshopjavafxjdbc.gui.listeners.DataChangeListener;
 import com.metatron.workshopjavafxjdbc.gui.util.Alerts;
 import com.metatron.workshopjavafxjdbc.gui.util.Utils;
 import com.metatron.workshopjavafxjdbc.model.entities.Seller;
+import com.metatron.workshopjavafxjdbc.model.services.DepartmentService;
 import com.metatron.workshopjavafxjdbc.model.services.SellerService;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -117,7 +118,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 			SellerFormController controller = loader.getController();
 			controller.setSeller(obj);
-			controller.setSellerService(new SellerService());
+			controller.setServices(new SellerService(), new DepartmentService());
+            controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFromData();
 
