@@ -1,5 +1,6 @@
 package com.metatron.workshopjavafxjdbc.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -30,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jdk.jshell.execution.Util;
 
@@ -71,7 +74,7 @@ public class SellerListController implements Initializable, DataChangeListener {
     public void onBtNewAction(ActionEvent event) {
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
-        createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
+        createDialogForm(obj, "/com/metatron/workshopjavafxjdbc/SellerForm.fxml", parentStage);
     }
 
     public void setSellerService(SellerService service) {
@@ -108,26 +111,26 @@ public class SellerListController implements Initializable, DataChangeListener {
     }
 
     private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//
-//			SellerFormController controller = loader.getController();
-//			controller.setSeller(obj);
-//			controller.setSellerService(new SellerService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Enter Seller data");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
+
+			SellerFormController controller = loader.getController();
+			controller.setSeller(obj);
+			controller.setSellerService(new SellerService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFromData();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Enter Seller data");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
     }
 
     @Override
@@ -149,7 +152,7 @@ public class SellerListController implements Initializable, DataChangeListener {
                 }
                 setGraphic(button);
                 button.setOnAction(
-                        event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
+                        event -> createDialogForm(obj, "/com/metatron/workshopjavafxjdbc/SellerForm.fxml", Utils.currentStage(event)));
             }
         });
     }
